@@ -2,6 +2,7 @@ package com.spider.solomon.order;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Information for a customer's order
@@ -23,6 +24,11 @@ public class CustomerOrder {
 	 * The total monetary amount of the order
 	 */
 	private BigDecimal totalAmount;
+
+	/**
+	 * List of items in the order
+	 */
+	private List<OrderItem> items;
 
 	public int getOrderId() {
 		return orderId;
@@ -54,5 +60,13 @@ public class CustomerOrder {
 
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public List<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<OrderItem> items) {
+		this.items = items;
 	}
 }
