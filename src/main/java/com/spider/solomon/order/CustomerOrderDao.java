@@ -12,6 +12,8 @@ import jakarta.annotation.Resource;
 public class CustomerOrderDao {
 	@Resource
 	JdbcTemplate jdbcTemplate;
+	@Resource
+	OrderItemDao orderItemDao;
 
 	/**
 	 * Get all orders in the system
@@ -34,7 +36,13 @@ public class CustomerOrderDao {
 	 */
 	public List<CustomerOrder> getOrdersByCustomerId (int customerId) {
 		String sql = "SELECT * FROM customer_orders WHERE customer_id = ?";
-		return jdbcTemplate.query(sql, ORDER_MAPPER, customerId);
+
+		List<CustomerOrder> ordrs = jdbcTemplate.query(sql, ORDER_MAPPER, customerId);
+		ordrs.forEach(order -> {
+			order.setItems(orderItemDao.getOrderItemsByOrderId(order.getOrderId()));
+		});
+
+		return ordrs;
 	}
 
 	/**
